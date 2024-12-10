@@ -1,21 +1,23 @@
 package mobile.notification;
 
 import mobile.filters.Filter;
+import mobile.listings.Listing;
 import mobile.notification.notifier.NotifierType;
+import mobile.util.Manager;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class SubscriptionManager {
-    private static List<Subscription<?>> subscriptions = new ArrayList<>();
+public class SubscriptionManager extends Manager<Subscription<?>> {
 
-    public void addSubscription(String userID, List<Filter<?>> filters, NotifierType type) {
-        subscriptions.add(new Subscription<>(userID, filters, type));
+    public void add(String userID, List<Filter<Listing>> filters, NotifierType notifierType) {
+        super.add(new Subscription<>(userID, filters, notifierType));
     }
 
-    public void notifySubscribers() {
-        for (Subscription subscription : subscriptions) {
-
+    public void notifyUsers(Listing listing) {
+        for (var subscription : repo) {
+            if (subscription.isActive(listing)) {
+                subscription.send();
+            }
         }
     }
 }

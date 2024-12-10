@@ -3,7 +3,6 @@ package mobile.listings;
 import mobile.vehicle.Vehicle;
 
 public record Listing(
-        Integer id,
         Vehicle product,
         String ownerId,
         String expiryDate,
@@ -11,4 +10,8 @@ public record Listing(
         String description,
         Boolean isService) {
 
+    @Override
+    public String toString() {
+        return product.toString() + ownerId;
+    }
 }
