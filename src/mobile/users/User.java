@@ -6,5 +6,8 @@ public record User(
         String email,
         String phone
 ) {
-
+    @Override
+    public String toString() {
+        return email;
+    }
 }

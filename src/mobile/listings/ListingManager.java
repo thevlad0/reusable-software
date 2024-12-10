@@ -1,17 +1,14 @@
 package mobile.listings;
 
-import mobile.listings.repo.ListingRepository;
+import mobile.util.Manager;
+import mobile.util.ManagerDistributor;
 
-public record ListingManager() {
-    private static final ListingRepository repo = new ListingRepository();
-
+public class ListingManager extends Manager<Listing> {
+    @Override
     public void add(Listing listing) {
-        repo.add(listing);
+        super.add(listing);
 
-
-    }
-
-    public void getByID(int id) {
-        repo.getByID(id);
+        ManagerDistributor.getSubscriptionManager()
+                .notifyUsers(listing);
     }
 }
